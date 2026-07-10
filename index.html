@@ -1,1296 +1,228 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gemini Pro - صفحة الطلب</title>
-
-  <style>
-    :root {
-      --bg: #070b18;
-      --card: rgba(255, 255, 255, 0.08);
-      --card-2: rgba(255, 255, 255, 0.12);
-      --text: #ffffff;
-      --muted: #b9c0d4;
-      --primary: #7c3aed;
-      --primary-2: #06b6d4;
-      --success: #22c55e;
-      --danger: #ef4444;
-      --border: rgba(255, 255, 255, 0.14);
-      --shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
-      --radius: 24px;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Tajawal", "Cairo", system-ui, sans-serif;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      background:
-        radial-gradient(circle at top right, rgba(124, 58, 237, 0.35), transparent 35%),
-        radial-gradient(circle at top left, rgba(6, 182, 212, 0.25), transparent 30%),
-        var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    img {
-      max-width: 100%;
-      display: block;
-    }
-
-    .container {
-      width: min(1180px, 92%);
-      margin: auto;
-    }
-
-    /* Header */
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(7, 11, 24, 0.76);
-      backdrop-filter: blur(18px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav {
-      min-height: 76px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-weight: 900;
-      font-size: 22px;
-      letter-spacing: 0.3px;
-    }
-
-    .logo-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, var(--primary), var(--primary-2));
-      display: grid;
-      place-items: center;
-      box-shadow: 0 12px 35px rgba(124, 58, 237, 0.35);
-    }
-
-    .menu {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      color: var(--muted);
-      font-size: 15px;
-    }
-
-    .menu a:hover {
-      color: white;
-    }
-
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .btn {
-      border: 0;
-      cursor: pointer;
-      color: white;
-      padding: 14px 22px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, var(--primary), var(--primary-2));
-      font-weight: 800;
-      box-shadow: 0 14px 35px rgba(124, 58, 237, 0.32);
-      transition: 0.25s ease;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 18px 45px rgba(6, 182, 212, 0.32);
-    }
-
-    .btn-outline {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid var(--border);
-      box-shadow: none;
-    }
-
-    .mobile-btn {
-      display: none;
-      width: 46px;
-      height: 46px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.08);
-      color: white;
-      font-size: 24px;
-      cursor: pointer;
-    }
-
-    /* Hero */
-    .hero {
-      padding: 85px 0 55px;
-      position: relative;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      align-items: center;
-      gap: 48px;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 9px 15px;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.08);
-      color: #dbeafe;
-      margin-bottom: 20px;
-      font-size: 14px;
-    }
-
-    .hero h1 {
-      font-size: clamp(38px, 6vw, 72px);
-      line-height: 1.05;
-      margin-bottom: 22px;
-      font-weight: 950;
-    }
-
-    .gradient-text {
-      background: linear-gradient(135deg, #c4b5fd, #67e8f9, #ffffff);
-      -webkit-background-clip: text;
-      color: transparent;
-    }
-
-    .hero p {
-      color: var(--muted);
-      font-size: 19px;
-      line-height: 1.9;
-      max-width: 620px;
-      margin-bottom: 28px;
-    }
-
-    .hero-buttons {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin-bottom: 30px;
-    }
-
-    .trust {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      max-width: 620px;
-    }
-
-    .trust-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      padding: 18px;
-      border-radius: 18px;
-      text-align: center;
-    }
-
-    .trust-card strong {
-      display: block;
-      font-size: 24px;
-      margin-bottom: 5px;
-    }
-
-    .trust-card span {
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .product-preview {
-      position: relative;
-    }
-
-    .phone-card {
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.06));
-      border: 1px solid var(--border);
-      border-radius: 34px;
-      padding: 22px;
-      box-shadow: var(--shadow);
-      transform: rotate(-2deg);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .phone-card::before {
-      content: "";
-      position: absolute;
-      width: 260px;
-      height: 260px;
-      background: rgba(6, 182, 212, 0.18);
-      border-radius: 50%;
-      top: -80px;
-      left: -70px;
-      filter: blur(8px);
-    }
-
-    .screen {
-      position: relative;
-      border-radius: 26px;
-      background: #0b1022;
-      border: 1px solid rgba(255,255,255,0.1);
-      padding: 24px;
-      overflow: hidden;
-    }
-
-    .screen-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 28px;
-    }
-
-    .dots {
-      display: flex;
-      gap: 6px;
-    }
-
-    .dot {
-      width: 10px;
-      height: 10px;
-      background: rgba(255,255,255,0.25);
-      border-radius: 50%;
-    }
-
-    .ai-circle {
-      width: 170px;
-      height: 170px;
-      margin: 20px auto;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle, rgba(255,255,255,0.9), transparent 26%),
-        conic-gradient(from 120deg, #7c3aed, #06b6d4, #22c55e, #7c3aed);
-      filter: drop-shadow(0 0 45px rgba(124, 58, 237, 0.5));
-      animation: spin 8s linear infinite;
-    }
-
-    @keyframes spin {
-      from { transform: rotate(0); }
-      to { transform: rotate(360deg); }
-    }
-
-    .chat-box {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 16px;
-      margin-top: 18px;
-    }
-
-    .line {
-      height: 10px;
-      background: rgba(255,255,255,0.16);
-      border-radius: 999px;
-      margin: 10px 0;
-    }
-
-    .line.w80 { width: 80%; }
-    .line.w60 { width: 60%; }
-    .line.w95 { width: 95%; }
-
-    .floating-price {
-      position: absolute;
-      right: -20px;
-      bottom: 30px;
-      background: rgba(34, 197, 94, 0.12);
-      border: 1px solid rgba(34, 197, 94, 0.35);
-      border-radius: 20px;
-      padding: 18px;
-      backdrop-filter: blur(12px);
-      box-shadow: var(--shadow);
-    }
-
-    .floating-price span {
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .floating-price strong {
-      display: block;
-      font-size: 28px;
-      margin-top: 4px;
-    }
-
-    /* Sections */
-    section {
-      padding: 70px 0;
-    }
-
-    .section-head {
-      text-align: center;
-      margin-bottom: 42px;
-    }
-
-    .section-head h2 {
-      font-size: clamp(30px, 4vw, 48px);
-      margin-bottom: 14px;
-    }
-
-    .section-head p {
-      color: var(--muted);
-      max-width: 680px;
-      margin: auto;
-      line-height: 1.8;
-      font-size: 17px;
-    }
-
-    .features {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
-    }
-
-    .feature-card,
-    .step-card,
-    .pricing-card,
-    .faq-item,
-    .order-box {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-
-    .feature-card {
-      padding: 28px;
-      transition: 0.25s ease;
-    }
-
-    .feature-card:hover {
-      transform: translateY(-6px);
-      background: var(--card-2);
-    }
-
-    .icon {
-      width: 54px;
-      height: 54px;
-      border-radius: 18px;
-      display: grid;
-      place-items: center;
-      margin-bottom: 18px;
-      background: linear-gradient(135deg, rgba(124,58,237,0.35), rgba(6,182,212,0.25));
-      font-size: 25px;
-    }
-
-    .feature-card h3 {
-      margin-bottom: 12px;
-      font-size: 21px;
-    }
-
-    .feature-card p {
-      color: var(--muted);
-      line-height: 1.8;
-      font-size: 15px;
-    }
-
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
-    }
-
-    .step-card {
-      padding: 24px;
-      text-align: center;
-      position: relative;
-    }
-
-    .step-number {
-      width: 44px;
-      height: 44px;
-      margin: 0 auto 14px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, var(--primary), var(--primary-2));
-      font-weight: 900;
-    }
-
-    .step-card h3 {
-      margin-bottom: 10px;
-    }
-
-    .step-card p {
-      color: var(--muted);
-      line-height: 1.7;
-      font-size: 14px;
-    }
-
-    .pricing-wrap {
-      display: grid;
-      grid-template-columns: 0.9fr 1.1fr;
-      gap: 26px;
-      align-items: stretch;
-    }
-
-    .pricing-card {
-      padding: 34px;
-    }
-
-    .price {
-      font-size: 52px;
-      font-weight: 950;
-      margin: 12px 0;
-    }
-
-    .price small {
-      font-size: 18px;
-      color: var(--muted);
-    }
-
-    .pricing-card ul {
-      list-style: none;
-      margin: 24px 0;
-    }
-
-    .pricing-card li {
-      padding: 12px 0;
-      color: var(--muted);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .pricing-card li::before {
-      content: "✓";
-      color: var(--success);
-      font-weight: 900;
-      margin-left: 10px;
-    }
-
-    /* Order Form */
-    .order-box {
-      padding: 34px;
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-    }
-
-    .form-group {
-      margin-bottom: 16px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 9px;
-      color: #e5e7eb;
-      font-weight: 700;
-      font-size: 14px;
-    }
-
-    input,
-    select,
-    textarea {
-      width: 100%;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.08);
-      color: white;
-      padding: 15px 16px;
-      border-radius: 16px;
-      outline: none;
-      transition: 0.2s;
-      font-size: 15px;
-    }
-
-    textarea {
-      min-height: 110px;
-      resize: vertical;
-    }
-
-    input:focus,
-    select:focus,
-    textarea:focus {
-      border-color: rgba(6, 182, 212, 0.75);
-      box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.10);
-    }
-
-    select option {
-      color: #111827;
-    }
-
-    .upload {
-      border: 1.5px dashed rgba(255,255,255,0.28);
-      border-radius: 18px;
-      padding: 22px;
-      text-align: center;
-      background: rgba(255,255,255,0.05);
-      cursor: pointer;
-      transition: 0.2s;
-    }
-
-    .upload:hover {
-      border-color: var(--primary-2);
-      background: rgba(6, 182, 212, 0.07);
-    }
-
-    .upload input {
-      display: none;
-    }
-
-    .upload-preview {
-      margin-top: 12px;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .error {
-      color: #fecaca;
-      font-size: 13px;
-      margin-top: 7px;
-      display: none;
-    }
-
-    .success-message {
-      display: none;
-      padding: 16px;
-      margin-top: 18px;
-      border-radius: 16px;
-      background: rgba(34, 197, 94, 0.12);
-      border: 1px solid rgba(34, 197, 94, 0.35);
-      color: #bbf7d0;
-      line-height: 1.8;
-    }
-
-    /* FAQ */
-    .faq {
-      display: grid;
-      gap: 14px;
-      max-width: 850px;
-      margin: auto;
-    }
-
-    .faq-item {
-      overflow: hidden;
-    }
-
-    .faq-question {
-      padding: 20px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-weight: 800;
-    }
-
-    .faq-answer {
-      max-height: 0;
-      overflow: hidden;
-      transition: 0.3s ease;
-      color: var(--muted);
-      line-height: 1.8;
-      padding: 0 20px;
-    }
-
-    .faq-item.active .faq-answer {
-      max-height: 200px;
-      padding: 0 20px 20px;
-    }
-
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 35px 0;
-      color: var(--muted);
-      text-align: center;
-    }
-
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 18px;
-      flex-wrap: wrap;
-      margin-top: 14px;
-      font-size: 14px;
-    }
-
-    .footer-links a:hover {
-      color: white;
-    }
-
-    /* Modal */
-    .modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.7);
-      backdrop-filter: blur(8px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 999;
-      padding: 20px;
-    }
-
-    .modal.active {
-      display: flex;
-    }
-
-    .modal-content {
-      width: min(620px, 100%);
-      background: #0b1022;
-      border: 1px solid var(--border);
-      border-radius: 28px;
-      padding: 30px;
-      box-shadow: var(--shadow);
-      position: relative;
-    }
-
-    .close-modal {
-      position: absolute;
-      left: 22px;
-      top: 18px;
-      width: 38px;
-      height: 38px;
-      border: 0;
-      border-radius: 50%;
-      cursor: pointer;
-      background: rgba(255,255,255,0.08);
-      color: white;
-      font-size: 22px;
-    }
-
-    .modal-content h3 {
-      font-size: 26px;
-      margin-bottom: 15px;
-    }
-
-    .modal-content p {
-      color: var(--muted);
-      line-height: 1.9;
-      margin-bottom: 14px;
-    }
-
-    /* Responsive */
-    @media (max-width: 920px) {
-      .hero-grid,
-      .pricing-wrap {
-        grid-template-columns: 1fr;
-      }
-
-      .features {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .steps {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .menu {
-        position: fixed;
-        top: 76px;
-        right: -100%;
-        width: 82%;
-        height: calc(100vh - 76px);
-        background: rgba(7, 11, 24, 0.96);
-        backdrop-filter: blur(16px);
-        border-left: 1px solid var(--border);
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 28px;
-        transition: 0.3s ease;
-      }
-
-      .menu.active {
-        right: 0;
-      }
-
-      .mobile-btn {
-        display: block;
-      }
-
-      .nav-actions .btn {
-        display: none;
-      }
-    }
-
-    @media (max-width: 620px) {
-      .hero {
-        padding-top: 55px;
-      }
-
-      .trust,
-      .features,
-      .steps,
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .floating-price {
-        position: static;
-        margin-top: 16px;
-      }
-
-      .phone-card {
-        transform: none;
-      }
-
-      .price {
-        font-size: 42px;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>استبيان تجهيز الموقع الإلكتروني</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #0f172a;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            color: var(--primary);
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #64748b;
+            font-size: 1.1rem;
+        }
+
+        .section-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+        }
+
+        .section-card h2 {
+            margin-top: 0;
+            font-size: 1.4rem;
+            color: var(--primary);
+            border-bottom: 2px solid var(--bg);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .optional {
+            font-weight: normal;
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+
+        input[type="text"], select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-family: inherit;
+            font-size: 100%;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px;
+            width: 100%;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        #successMessage {
+            display: none;
+            background: #bbf7d0;
+            color: #166534;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
 </head>
-
 <body>
 
-  <header>
-    <div class="container nav">
-      <a href="#" class="logo">
-        <span class="logo-icon">✦</span>
-        <span>Gemini Pro</span>
-      </a>
+<div class="container">
+    <header>
+        <h1>دعنا نبني موقعك الاحترافي</h1>
+        <p>يرجى ملء هذا الاستبيان بدقة لمساعدتنا في تصميم وبرمجة موقعك بدون أخطاء.</p>
+    </header>
 
-      <nav class="menu" id="menu">
-        <a href="#features">المميزات</a>
-        <a href="#how">طريقة الطلب</a>
-        <a href="#pricing">السعر</a>
-        <a href="#order">اطلب الآن</a>
-        <a href="#faq">الأسئلة</a>
-      </nav>
-
-      <div class="nav-actions">
-        <a href="#order" class="btn">اطلب الآن</a>
-        <button class="mobile-btn" id="mobileBtn">☰</button>
-      </div>
-    </div>
-  </header>
-
-  <main>
-
-    <section class="hero">
-      <div class="container hero-grid">
-        <div>
-          <div class="badge">⚡ اشتراك رقمي سريع التفعيل</div>
-
-          <h1>
-            احصل على تجربة
-            <span class="gradient-text">Gemini Pro</span>
-            باحترافية وسرعة
-          </h1>
-
-          <p>
-            صفحة طلب آمنة وسهلة لشراء اشتراك Gemini Pro. املأ بياناتك، ارفع وصل الدفع،
-            وسيتم التواصل معك لتأكيد الطلب وتفعيل الخدمة في أقرب وقت.
-          </p>
-
-          <div class="hero-buttons">
-            <a href="#order" class="btn">ابدأ الطلب الآن</a>
-            <a href="#features" class="btn btn-outline">شاهد المميزات</a>
-          </div>
-
-          <div class="trust">
-            <div class="trust-card">
-              <strong>24/7</strong>
-              <span>استقبال الطلبات</span>
+    <form id="mainClientForm">
+        <!-- القسم الأول -->
+        <div class="section-card">
+            <h2>1. الهوية البصرية والمعلومات الأساسية</h2>
+            <div class="form-group">
+                <label>ما هو الاسم الرسمي للمشروع أو الموقع؟ *</label>
+                <input type="text" name="projectName" required>
             </div>
-            <div class="trust-card">
-              <strong>آمن</strong>
-              <span>معلوماتك محمية</span>
+            <div class="form-group">
+                <label>رابط الشعار (أو وصفه إذا لم يكن جاهزاً) <span class="optional">(اختياري)</span></label>
+                <input type="text" name="logoLink">
             </div>
-            <div class="trust-card">
-              <strong>سريع</strong>
-              <span>تأكيد عبر واتساب</span>
+            <div class="form-group">
+                <label>الألوان الأساسية المفضلة للموقع؟ *</label>
+                <input type="text" name="colors" placeholder="مثال: أزرق ملكي وأبيض" required>
             </div>
-          </div>
-        </div>
-
-        <div class="product-preview">
-          <div class="phone-card">
-            <div class="screen">
-              <div class="screen-top">
-                <strong>Gemini Pro</strong>
-                <div class="dots">
-                  <span class="dot"></span>
-                  <span class="dot"></span>
-                  <span class="dot"></span>
-                </div>
-              </div>
-
-              <div class="ai-circle"></div>
-
-              <div class="chat-box">
-                <strong>مساعد ذكي للكتابة، البحث، التلخيص والإنتاجية</strong>
-                <div class="line w95"></div>
-                <div class="line w80"></div>
-                <div class="line w60"></div>
-              </div>
+            <div class="form-group">
+                <label>روابط مواقع منافسة أو تصاميم تعجبك:</label>
+                <textarea name="competitors" rows="3"></textarea>
             </div>
-          </div>
-
-          <div class="floating-price">
-            <span>ابتداءً من</span>
-            <strong>ضع السعر هنا</strong>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="features">
-      <div class="container">
-        <div class="section-head">
-          <h2>لماذا تختار Gemini Pro؟</h2>
-          <p>
-            تجربة مصممة لمن يريد أداءً أفضل في الدراسة، العمل، صناعة المحتوى، البرمجة،
-            وتحسين الإنتاجية اليومية.
-          </p>
         </div>
 
-        <div class="features">
-          <div class="feature-card">
-            <div class="icon">🧠</div>
-            <h3>ذكاء اصطناعي متقدم</h3>
-            <p>يساعدك في توليد الأفكار، كتابة النصوص، تلخيص الملفات، وتحسين أسلوبك بسرعة.</p>
-          </div>
-
-          <div class="feature-card">
-            <div class="icon">🚀</div>
-            <h3>إنتاجية أعلى</h3>
-            <p>وفّر وقتك في البحث والكتابة والتنظيم، وأنجز مهامك بشكل أسرع وأكثر احترافية.</p>
-          </div>
-
-          <div class="feature-card">
-            <div class="icon">💼</div>
-            <h3>مناسب للعمل والدراسة</h3>
-            <p>مثالي للطلاب، المسوقين، المصممين، المبرمجين، وأصحاب المشاريع الرقمية.</p>
-          </div>
-
-          <div class="feature-card">
-            <div class="icon">🔐</div>
-            <h3>طلب آمن</h3>
-            <p>نموذج الطلب يطلب المعلومات الضرورية فقط، مع رفع وصل الدفع لتأكيد العملية.</p>
-          </div>
-
-          <div class="feature-card">
-            <div class="icon">📲</div>
-            <h3>تواصل مباشر</h3>
-            <p>بعد إرسال الطلب يتم تجهيز رسالة واتساب تلقائية لتسهيل التواصل وتأكيد الطلب.</p>
-          </div>
-
-          <div class="feature-card">
-            <div class="icon">⭐</div>
-            <h3>تجربة احترافية</h3>
-            <p>واجهة أنيقة وواضحة تجعل العميل يفهم المنتج وطريقة الطلب بدون تعقيد.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="how">
-      <div class="container">
-        <div class="section-head">
-          <h2>طريقة الطلب</h2>
-          <p>أربع خطوات بسيطة لإرسال طلبك وتأكيده.</p>
-        </div>
-
-        <div class="steps">
-          <div class="step-card">
-            <div class="step-number">1</div>
-            <h3>اختر الباقة</h3>
-            <p>حدد مدة الاشتراك المناسبة لك من نموذج الطلب.</p>
-          </div>
-
-          <div class="step-card">
-            <div class="step-number">2</div>
-            <h3>ادفع المبلغ</h3>
-            <p>قم بالدفع عبر وسيلة الدفع التي تحددها أنت.</p>
-          </div>
-
-          <div class="step-card">
-            <div class="step-number">3</div>
-            <h3>ارفع الوصل</h3>
-            <p>أرفق صورة وصل الدفع داخل نموذج الطلب.</p>
-          </div>
-
-          <div class="step-card">
-            <div class="step-number">4</div>
-            <h3>تأكيد الطلب</h3>
-            <p>اضغط إرسال وسيتم فتح واتساب برسالة جاهزة.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="pricing">
-      <div class="container">
-        <div class="pricing-wrap">
-          <div class="pricing-card">
-            <div class="badge">🔥 العرض الحالي</div>
-            <h2>Gemini Pro</h2>
-            <div class="price">ضع السعر <small>/ شهريًا</small></div>
-
-            <ul>
-              <li>تفعيل سريع بعد تأكيد الدفع</li>
-              <li>دعم عبر واتساب</li>
-              <li>مناسب للدراسة والعمل والمحتوى</li>
-              <li>إرسال وصل الدفع داخل النموذج</li>
-              <li>طلب سهل من الهاتف أو الكمبيوتر</li>
-            </ul>
-
-            <a href="#order" class="btn" style="width:100%;">اطلب هذه الباقة</a>
-          </div>
-
-          <div class="order-box" id="order">
-            <h2 style="margin-bottom: 10px;">نموذج طلب Gemini Pro</h2>
-            <p style="color: var(--muted); line-height: 1.8; margin-bottom: 22px;">
-              املأ البيانات التالية بدقة، ثم ارفع وصل الدفع واضغط إرسال الطلب.
-            </p>
-
-            <form id="orderForm">
-              <div class="form-grid">
-                <div class="form-group">
-                  <label for="name">الاسم الكامل</label>
-                  <input type="text" id="name" placeholder="مثال: محمد أحمد" />
-                  <div class="error" id="nameError">يرجى إدخال الاسم الكامل.</div>
-                </div>
-
-                <div class="form-group">
-                  <label for="phone">رقم الهاتف</label>
-                  <input type="tel" id="phone" placeholder="مثال: 0550000000" />
-                  <div class="error" id="phoneError">يرجى إدخال رقم هاتف صحيح.</div>
-                </div>
-              </div>
-
-              <div class="form-grid">
-                <div class="form-group">
-                  <label for="email">البريد الإلكتروني</label>
-                  <input type="email" id="email" placeholder="example@email.com" />
-                  <div class="error" id="emailError">يرجى إدخال بريد إلكتروني صحيح.</div>
-                </div>
-
-                <div class="form-group">
-                  <label for="plan">مدة الاشتراك</label>
-                  <select id="plan">
-                    <option value="">اختر المدة</option>
-                    <option value="شهر واحد">شهر واحد</option>
-                    <option value="3 أشهر">3 أشهر</option>
-                    <option value="6 أشهر">6 أشهر</option>
-                    <option value="سنة كاملة">سنة كاملة</option>
-                  </select>
-                  <div class="error" id="planError">يرجى اختيار مدة الاشتراك.</div>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label for="paymentMethod">طريقة الدفع</label>
-                <select id="paymentMethod">
-                  <option value="">اختر طريقة الدفع</option>
-                  <option value="BaridiMob">BaridiMob</option>
-                  <option value="CCP">CCP</option>
-                  <option value="تحويل بنكي">تحويل بنكي</option>
-                  <option value="وسيلة أخرى">وسيلة أخرى</option>
+        <!-- القسم الثاني -->
+        <div class="section-card">
+            <h2>2. تفاصيل صفحة توفير المنتجات (Sourcing)</h2>
+            <div class="form-group">
+                <label>هل تريد إضافة حقول أخرى لنموذج طلب المنتجات؟</label>
+                <textarea name="extraSourcingFields" rows="2" placeholder="النموذج الافتراضي يحتوي على: الصورة، الاسم، الكمية، الرابط، الملاحظات."></textarea>
+            </div>
+            <div class="form-group">
+                <label>أين تفضل استقبال طلبات المنتجات؟ *</label>
+                <select name="receiveMethod" required>
+                    <option value="الواتساب">رسالة مباشرة على الواتساب</option>
+                    <option value="البريد الإلكتروني">عبر البريد الإلكتروني</option>
+                    <option value="لوحة تحكم مستقبلاً">حفظ في لوحة تحكم خاصة مستقبلاً</option>
                 </select>
-                <div class="error" id="paymentError">يرجى اختيار طريقة الدفع.</div>
-              </div>
-
-              <div class="form-group">
-                <label>وصل الدفع</label>
-                <label class="upload" for="receipt">
-                  <strong>📎 اضغط هنا لرفع صورة وصل الدفع</strong>
-                  <div class="upload-preview" id="filePreview">PNG / JPG / PDF</div>
-                  <input type="file" id="receipt" accept="image/*,.pdf" />
-                </label>
-                <div class="error" id="receiptError">يرجى رفع وصل الدفع.</div>
-              </div>
-
-              <div class="form-group">
-                <label for="notes">ملاحظات إضافية</label>
-                <textarea id="notes" placeholder="اكتب أي ملاحظة تريد إضافتها..."></textarea>
-              </div>
-
-              <button type="submit" class="btn" style="width:100%; font-size:16px;">
-                إرسال الطلب عبر واتساب
-              </button>
-
-              <div class="success-message" id="successMessage">
-                تم تجهيز الطلب بنجاح. سيتم فتح واتساب لإرسال بيانات الطلب.
-                ملاحظة: لا يمكن إرسال ملف الوصل تلقائيًا عبر رابط واتساب، لذلك أرسله يدويًا بعد فتح المحادثة.
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="faq">
-      <div class="container">
-        <div class="section-head">
-          <h2>الأسئلة الشائعة</h2>
-          <p>إجابات سريعة لأكثر الأسئلة التي قد يحتاجها العميل قبل الطلب.</p>
+            </div>
+            <div class="form-group">
+                <label>رقم الواتساب أو البريد المخصص لاستقبال الطلبات: *</label>
+                <input type="text" name="contactInfo" required>
+            </div>
         </div>
 
-        <div class="faq">
-          <div class="faq-item">
-            <div class="faq-question">
-              هل يتم تفعيل الاشتراك مباشرة؟
-              <span>+</span>
+        <!-- القسم الثالث -->
+        <div class="section-card">
+            <h2>3. تفاصيل خدمة الـ VIP والدعم</h2>
+            <div class="form-group">
+                <label>اكتب المميزات الدقيقة لباقة الـ VIP بالتفصيل: *</label>
+                <textarea name="vipFeatures" rows="4" placeholder="مثال: منتجات رابحة يومياً، دعم 24 ساعة..." required></textarea>
             </div>
-            <div class="faq-answer">
-              يتم تأكيد الطلب بعد مراجعة وصل الدفع، ثم يتم التواصل معك لإتمام التفعيل حسب توفر الخدمة.
+            <div class="form-group">
+                <label>سعر الاشتراك في خدمة الـ VIP ومجموعة التيليجرام: *</label>
+                <input type="text" name="vipPriceAndTelegram" placeholder="مثال: 49$ شهرياً / رابط القناة" required>
             </div>
-          </div>
-
-          <div class="faq-item">
-            <div class="faq-question">
-              هل يجب رفع وصل الدفع؟
-              <span>+</span>
+            <div class="form-group">
+                <label>روابط حسابات التواصل وسياسة الموقع <span class="optional">(اختياري)</span></label>
+                <textarea name="socialAndTerms" rows="3"></textarea>
             </div>
-            <div class="faq-answer">
-              نعم، رفع الوصل يساعد على التحقق من عملية الدفع وتسريع معالجة طلبك.
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <div class="faq-question">
-              هل بياناتي آمنة؟
-              <span>+</span>
-            </div>
-            <div class="faq-answer">
-              يتم استخدام بياناتك فقط للتواصل معك ومعالجة الطلب، ولا يتم طلب معلومات حساسة غير ضرورية.
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <div class="faq-question">
-              ماذا أفعل بعد إرسال الطلب؟
-              <span>+</span>
-            </div>
-            <div class="faq-answer">
-              بعد فتح واتساب، أرسل الرسالة الجاهزة ثم أرفق وصل الدفع يدويًا داخل المحادثة.
-            </div>
-          </div>
         </div>
-      </div>
-    </section>
 
-  </main>
+        <button type="submit" id="submitBtn">إرسال البيانات إلى المطور</button>
+    </form>
 
-  <footer>
-    <div class="container">
-      <strong>Gemini Pro Landing Page</strong>
-      <p style="margin-top:10px;">© جميع الحقوق محفوظة - عدّل هذا النص باسم متجرك</p>
+    <div id="successMessage">🎉 تم إرسال إجاباتك بنجاح! شكراً لك، سنبدأ العمل فوراً.</div>
+</div>
 
-      <div class="footer-links">
-        <a href="#" onclick="openModal('privacy')">سياسة الخصوصية</a>
-        <a href="#" onclick="openModal('terms')">الشروط والأحكام</a>
-        <a href="#order">الطلب</a>
-      </div>
-    </div>
-  </footer>
+<script>
+    // ضع هنا رابط Google Apps Script بعد استخراجه (الخطوة الثانية)
+    const scriptURL = 'YOUR_GOOGLE_SCRIPT_URL_HERE';
+    const form = document.getElementById('mainClientForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const successMessage = document.getElementById('successMessage');
 
-  <div class="modal" id="modal">
-    <div class="modal-content">
-      <button class="close-modal" onclick="closeModal()">×</button>
-      <div id="modalText"></div>
-    </div>
-  </div>
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        submitBtn.disabled = true;
+        submitBtn.innerText = 'جاري الإرسال والتحقق...';
 
-  <script>
-    /*
-      عدّل هذا الرقم إلى رقم واتساب الخاص بك.
-      اكتب الرقم بصيغة دولية بدون + وبدون مسافات.
-      مثال الجزائر: 213550000000
-    */
-    const WHATSAPP_NUMBER = "213550000000";
-
-    const menu = document.getElementById("menu");
-    const mobileBtn = document.getElementById("mobileBtn");
-
-    mobileBtn.addEventListener("click", () => {
-      menu.classList.toggle("active");
+        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            .then(response => {
+                form.style.display = 'none';
+                successMessage.style.display = 'block';
+            })
+            .catch(error => {
+                console.error('Error!', error.message);
+                alert('حدث خطأ أثناء الإرسال، يرجى المحاولة مرة أخرى.');
+                submitBtn.disabled = false;
+                submitBtn.innerText = 'إرسال البيانات إلى المطور';
+            });
     });
-
-    document.querySelectorAll(".menu a").forEach(link => {
-      link.addEventListener("click", () => {
-        menu.classList.remove("active");
-      });
-    });
-
-    const receiptInput = document.getElementById("receipt");
-    const filePreview = document.getElementById("filePreview");
-
-    receiptInput.addEventListener("change", () => {
-      if (receiptInput.files.length > 0) {
-        filePreview.textContent = "تم اختيار الملف: " + receiptInput.files[0].name;
-      } else {
-        filePreview.textContent = "PNG / JPG / PDF";
-      }
-    });
-
-    const form = document.getElementById("orderForm");
-
-    form.addEventListener("submit", function(e) {
-      e.preventDefault();
-
-      const name = document.getElementById("name").value.trim();
-      const phone = document.getElementById("phone").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const plan = document.getElementById("plan").value;
-      const paymentMethod = document.getElementById("paymentMethod").value;
-      const notes = document.getElementById("notes").value.trim();
-      const receipt = receiptInput.files[0];
-
-      let valid = true;
-
-      hideErrors();
-
-      if (name.length < 3) {
-        showError("nameError");
-        valid = false;
-      }
-
-      if (!/^[0-9+\s-]{8,20}$/.test(phone)) {
-        showError("phoneError");
-        valid = false;
-      }
-
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        showError("emailError");
-        valid = false;
-      }
-
-      if (!plan) {
-        showError("planError");
-        valid = false;
-      }
-
-      if (!paymentMethod) {
-        showError("paymentError");
-        valid = false;
-      }
-
-      if (!receipt) {
-        showError("receiptError");
-        valid = false;
-      }
-
-      if (!valid) return;
-
-      document.getElementById("successMessage").style.display = "block";
-
-      const message =
-`طلب جديد - Gemini Pro
-
-الاسم: ${name}
-رقم الهاتف: ${phone}
-الإيميل: ${email}
-مدة الاشتراك: ${plan}
-طريقة الدفع: ${paymentMethod}
-اسم ملف الوصل: ${receipt ? receipt.name : "لم يتم إرفاقه"}
-ملاحظات: ${notes || "لا توجد"}
-
-أرجو تأكيد الطلب وتفعيل الخدمة.`;
-
-      const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-
-      setTimeout(() => {
-        window.open(whatsappUrl, "_blank");
-      }, 800);
-    });
-
-    function showError(id) {
-      document.getElementById(id).style.display = "block";
-    }
-
-    function hideErrors() {
-      document.querySelectorAll(".error").forEach(error => {
-        error.style.display = "none";
-      });
-    }
-
-    document.querySelectorAll(".faq-question").forEach(question => {
-      question.addEventListener("click", () => {
-        const item = question.parentElement;
-        item.classList.toggle("active");
-      });
-    });
-
-    function openModal(type) {
-      const modal = document.getElementById("modal");
-      const modalText = document.getElementById("modalText");
-
-      if (type === "privacy") {
-        modalText.innerHTML = `
-          <h3>سياسة الخصوصية</h3>
-          <p>
-            نحن نحترم خصوصيتك. يتم جمع المعلومات التي تدخلها في نموذج الطلب مثل الاسم،
-            رقم الهاتف، البريد الإلكتروني، وبيانات الدفع فقط لغرض معالجة الطلب والتواصل معك.
-          </p>
-          <p>
-            لا نقوم ببيع أو مشاركة بياناتك مع أي طرف خارجي، ويتم استخدام المعلومات فقط
-            لتأكيد الطلب وتقديم الدعم اللازم.
-          </p>
-          <p>
-            عند رفع وصل الدفع، يتم استخدامه فقط للتحقق من عملية الدفع. ننصح بعدم إرسال
-            أي معلومات حساسة غير مطلوبة.
-          </p>
-        `;
-      }
-
-      if (type === "terms") {
-        modalText.innerHTML = `
-          <h3>الشروط والأحكام</h3>
-          <p>
-            بإرسال الطلب، أنت تؤكد أن البيانات المدخلة صحيحة وأن وصل الدفع المرفق يعود
-            إلى عملية الدفع الخاصة بطلبك.
-          </p>
-          <p>
-            يتم تفعيل الخدمة بعد مراجعة الطلب والتحقق من الدفع. مدة المعالجة قد تختلف
-            حسب الضغط وتوفر الخدمة.
-          </p>
-          <p>
-            لا يتم اعتبار الطلب مؤكدًا إلا بعد التواصل معك عبر واتساب وتأكيد عملية الدفع.
-          </p>
-        `;
-      }
-
-      modal.classList.add("active");
-    }
-
-    function closeModal() {
-      document.getElementById("modal").classList.remove("active");
-    }
-
-    window.addEventListener("click", (e) => {
-      const modal = document.getElementById("modal");
-      if (e.target === modal) {
-        closeModal();
-      }
-    });
-  </script>
-
+</script>
 </body>
 </html>
