@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>استبيان تجهيز الموقع الإلكتروني</title>
+    <title>استبيان المواصفات الفنية والبرمجية المتكاملة للموقع</title>
     <style>
         :root {
-            --primary: #4f46e5;
-            --primary-hover: #4338ca;
+            --primary: #0f172a;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
             --bg: #f8fafc;
             --card-bg: #ffffff;
-            --text: #0f172a;
+            --text: #334155;
             --border: #e2e8f0;
         }
 
@@ -20,58 +21,74 @@
             color: var(--text);
             margin: 0;
             padding: 0;
-            line-height: 1.6;
+            line-height: 1.7;
         }
 
         .container {
-            max-width: 700px;
-            margin: 50px auto;
+            max-width: 850px;
+            margin: 40px auto;
             padding: 20px;
         }
 
         header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 35px;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            padding: 40px 20px;
+            border-radius: 16px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
 
         header h1 {
-            color: var(--primary);
-            font-size: 2.2rem;
-            margin-bottom: 10px;
+            margin: 0 0 12px 0;
+            font-size: 2.4rem;
+            font-weight: 800;
         }
 
         header p {
-            color: #64748b;
+            color: #94a3b8;
+            margin: 0;
             font-size: 1.1rem;
         }
 
         .section-card {
             background: var(--card-bg);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 30px;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            border-radius: 16px;
+            padding: 35px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
 
         .section-card h2 {
             margin-top: 0;
             font-size: 1.4rem;
-            color: var(--primary);
-            border-bottom: 2px solid var(--bg);
-            padding-bottom: 10px;
-            margin-bottom: 20px;
+            color: var(--accent);
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 12px;
+            margin-bottom: 25px;
+            font-weight: 700;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         label {
             display: block;
             font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            color: #1e293b;
+        }
+
+        .instruction {
+            font-weight: normal;
+            color: #64748b;
+            font-size: 0.88rem;
+            margin-top: -5px;
             margin-bottom: 8px;
-            font-size: 0.95rem;
         }
 
         .optional {
@@ -80,48 +97,72 @@
             font-size: 0.85rem;
         }
 
-        input[type="text"], select, textarea {
+        input[type="text"], input[type="number"], select, textarea {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             border: 1px solid var(--border);
-            border-radius: 8px;
+            border-radius: 10px;
             box-sizing: border-box;
             font-family: inherit;
-            font-size: 100%;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            background-color: #f8fafc;
+        }
+
+        input[type="file"] {
+            background: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            border: 2px dashed var(--border);
+            cursor: pointer;
         }
 
         input:focus, select:focus, textarea:focus {
             outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+            border-color: var(--accent);
+            background-color: #fff;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
         }
 
-        button {
-            background-color: var(--primary);
+        button.submit-btn {
+            background-color: var(--accent);
             color: white;
             border: none;
-            padding: 14px;
+            padding: 18px;
             width: 100%;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: bold;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 700;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: all 0.2s;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
         }
 
-        button:hover {
-            background-color: var(--primary-hover);
+        button.submit-btn:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        button:disabled {
+            background-color: #94a3b8;
+            cursor: not-allowed;
+            transform: none;
         }
 
         #successMessage {
             display: none;
-            background: #bbf7d0;
+            background: #dcfce7;
             color: #166534;
-            padding: 20px;
-            border-radius: 8px;
+            padding: 30px;
+            border-radius: 16px;
             text-align: center;
             font-weight: bold;
+            font-size: 1.3rem;
+            border: 1px solid #bbf7d0;
             margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(22, 101, 52, 0.1);
         }
     </style>
 </head>
@@ -129,100 +170,234 @@
 
 <div class="container">
     <header>
-        <h1>دعنا نبني موقعك الاحترافي</h1>
-        <p>يرجى ملء هذا الاستبيان بدقة لمساعدتنا في تصميم وبرمجة موقعك بدون أخطاء.</p>
+        <h1>اتفاقية التطوير الهندسي والمحتوى</h1>
+        <p>يرجى الإجابة على هذه الأسئلة التفصيلية بدقة لتجنب الأخطاء البرمجية وتوفير كود نهائي متكامل ومثالي لموقعك.</p>
     </header>
 
-    <form id="mainClientForm">
-        <!-- القسم الأول -->
+    <form id="developerConsultingForm">
+        
+        <!-- القسم الأول: الهوية والبراند والعرض العام -->
         <div class="section-card">
-            <h2>1. الهوية البصرية والمعلومات الأساسية</h2>
+            <h2>1. الهوية البصرية والتوجه الفني للموقع</h2>
+            
             <div class="form-group">
-                <label>ما هو الاسم الرسمي للمشروع أو الموقع؟ *</label>
-                <input type="text" name="projectName" required>
+                <label>ما هو الاسم التجاري الرسمي والنهائي للموقع؟ *</label>
+                <input type="text" id="projectName" required>
             </div>
+            
             <div class="form-group">
-                <label>رابط الشعار (أو وصفه إذا لم يكن جاهزاً) <span class="optional">(اختياري)</span></label>
-                <input type="text" name="logoLink">
+                <label>ارفع شعار (Logo) الموقع الرسمي مباشرة من جهازك: <span class="optional">(اختياري)</span></label>
+                <div class="instruction">سيتم حفظ الصورة تلقائياً وتحويلها لرابط مباشر في جدول البيانات.</div>
+                <input type="file" id="logoFile" accept="image/*">
             </div>
+            
             <div class="form-group">
-                <label>الألوان الأساسية المفضلة للموقع؟ *</label>
-                <input type="text" name="colors" placeholder="مثال: أزرق ملكي وأبيض" required>
+                <label>ما هي الألوان الدقيقة التي ترغب في استخدامها؟ *</label>
+                <input type="text" id="brandColors" placeholder="مثال: لون أساسي أسود فخم، لون أزرار ذهبي متوهج، خلفية بيضاء مريحة للعين" required>
             </div>
+            
             <div class="form-group">
-                <label>روابط مواقع منافسة أو تصاميم تعجبك:</label>
-                <textarea name="competitors" rows="3"></textarea>
-            </div>
-        </div>
-
-        <!-- القسم الثاني -->
-        <div class="section-card">
-            <h2>2. تفاصيل صفحة توفير المنتجات (Sourcing)</h2>
-            <div class="form-group">
-                <label>هل تريد إضافة حقول أخرى لنموذج طلب المنتجات؟</label>
-                <textarea name="extraSourcingFields" rows="2" placeholder="النموذج الافتراضي يحتوي على: الصورة، الاسم، الكمية، الرابط، الملاحظات."></textarea>
-            </div>
-            <div class="form-group">
-                <label>أين تفضل استقبال طلبات المنتجات؟ *</label>
-                <select name="receiveMethod" required>
-                    <option value="الواتساب">رسالة مباشرة على الواتساب</option>
-                    <option value="البريد الإلكتروني">عبر البريد الإلكتروني</option>
-                    <option value="لوحة تحكم مستقبلاً">حفظ في لوحة تحكم خاصة مستقبلاً</option>
+                <label>نوع الخط والنمط العام المفضل للموقع: *</label>
+                <select id="designStyle" required>
+                    <option value="عصري وتقني وبسيط (Modern Minimalist)">عصري وتقني وبسيط (Modern Minimalist)</option>
+                    <option value="كلاسيكي وفخم (Premium Luxury)">كلاسيكي وفخم (Premium Luxury)</option>
+                    <option value="حماسي واحترافي موجه للتجارة">حماسي واحترافي موجه للتجارة</option>
                 </select>
             </div>
+
             <div class="form-group">
-                <label>رقم الواتساب أو البريد المخصص لاستقبال الطلبات: *</label>
-                <input type="text" name="contactInfo" required>
+                <label>روابط لمواقع منافسة أو تصاميم ترغب في محاكاتها أو تعجبك حركتها: <span class="optional">(اختياري)</span></label>
+                <textarea id="competitorLinks" rows="3" placeholder="ضع كل رابط في سطر منفصل لتسهيل المراجعة"></textarea>
             </div>
         </div>
 
-        <!-- القسم الثالث -->
+        <!-- القسم الثاني: نظام الـ Sourcing (توفير المنتجات) بالتفصيل الملل -->
         <div class="section-card">
-            <h2>3. تفاصيل خدمة الـ VIP والدعم</h2>
+            <h2>2. هندسة وبرمجة نظام الـ Sourcing</h2>
+            
             <div class="form-group">
-                <label>اكتب المميزات الدقيقة لباقة الـ VIP بالتفصيل: *</label>
-                <textarea name="vipFeatures" rows="4" placeholder="مثال: منتجات رابحة يومياً، دعم 24 ساعة..." required></textarea>
+                <label>العنوان الرئيسي والفرعي النصي الذي تود كتابته في أعلى صفحة الـ Sourcing؟ *</label>
+                <textarea id="sourcingText" rows="2" placeholder="مثال: العنوان: وفر أي منتج من الصين الآن. الفرعي: املأ الاستمارة وسيتكفل فريقنا بالباقي." required></textarea>
             </div>
+
             <div class="form-group">
-                <label>سعر الاشتراك في خدمة الـ VIP ومجموعة التيليجرام: *</label>
-                <input type="text" name="vipPriceAndTelegram" placeholder="مثال: 49$ شهرياً / رابط القناة" required>
+                <label>الفورم الحالي يطلب (الصورة، الاسم، الكمية، الرابط، الملاحظات). هل تريد إضافة أو تعديل أي حقول؟</label>
+                <textarea id="customSourcingFields" rows="2" placeholder="مثال: أريد إضافة حقل لاختيار الدولة، أو حقل لتحديد الميزانية التقريبية بالدولار..."></textarea>
             </div>
+            
             <div class="form-group">
-                <label>روابط حسابات التواصل وسياسة الموقع <span class="optional">(اختياري)</span></label>
-                <textarea name="socialAndTerms" rows="3"></textarea>
+                <label>عندما يضغط المستخدم "إرسال طلب السورسينج"، أين تذهب البيانات بالتفصيل؟ *</label>
+                <select id="sourcingProcess" required>
+                    <option value="واتساب تلقائي فوري">فتح تطبيق الواتساب مباشرة برسالة منسقة وجاهزة تحتوي على معلومات المنتج</option>
+                    <option value="إرسال لبريد الإدارة">إرسال بريد إلكتروني فوري ومؤتمت لإدارة الموقع</option>
+                    <option value="لوحة تحكم مشفرة">حفظ مباشر وسري في قاعدة بيانات لوحة تحكم الموقع</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>بيانات الاستقبال والاتصال (ضع رقم الواتساب بالرمز الدولي أو البريد الإلكتروني هنا): *</label>
+                <input type="text" id="sourcingContact" placeholder="مثال: 2137XXXXXXXX+ أو admin@brand.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label>نص رسالة الواتساب التلقائية (في حال اختيار تحويل واتساب): <span class="optional">(اختياري)</span></label>
+                <textarea id="whatsappTemplate" rows="3" placeholder="مثال: مرحباً إدارة الموقع، أود طلب توفير منتج. الاسم: [اسم المنتج]، الكمية: [الكمية]..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>ما هي الشروط أو المدة الزمنية التي نكتبها للمستخدم لإعلامه بانتظار الرد؟ *</label>
+                <input type="text" id="sourcingTime" placeholder="مثال: نقوم بالرد بتسعيرة الشحن والمنتج خلال 12 إلى 24 ساعة كحد أقصى" required>
             </div>
         </div>
 
-        <button type="submit" id="submitBtn">إرسال البيانات إلى المطور</button>
+        <!-- القسم الثالث: تفاصيل ومحتوى باقة الـ VIP الحصرية -->
+        <div class="section-card">
+            <h2>3. محتوى وبيانات صفحة خدمة الـ VIP</h2>
+            
+            <div class="form-group">
+                <label>العنوان التسويقي الجاذب لصفحة باقة الـ VIP: *</label>
+                <input type="text" id="vipMarketingTitle" placeholder="مثال: انضم إلى النخبة واكتشف المنتجات الأكثر ربحية قبل الجميع" required>
+            </div>
+
+            <div class="form-group">
+                <label>اكتب قائمة المزايا الحصرية لجروب الـ VIP بدقة (سيتم صياغتها على شكل نقاط أيقونية): *</label>
+                <textarea id="vipBenefits" rows="4" placeholder="مثال: 1. توفير من 3 إلى 5 منتجات رابحة يومياً ومحدثة. 2. روابط الموردين والمصانع مباشرة. 3. فيديوهات إعلانية جاهزة بدون حقوق لكل منتج. 4. دعم فني مخصص للاستشارات." required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>كم عدد المنتجات الرابحة التي سيتم الإعلان عنها دورياً في الصفحة للتحفيز؟ *</label>
+                <input type="text" id="vipProductsCount" placeholder="مثال: نرفع أكثر من 120 منتج رابح شهرياً داخل الجروب الحصري" required>
+            </div>
+
+            <div class="form-group">
+                <label>خطط أسعار الاشتراك التي تريد عرضها في جداول الأسعار: *</label>
+                <input type="text" id="vipPricing" placeholder="مثال: خطة شهرية بـ 35$ / خطة سنوية بـ 199$ (خصم 50%)" required>
+            </div>
+            
+            <div class="form-group">
+                <label>طرق الدفع المتوفرة والمتاحة لتفعيل اشتراكات الـ VIP؟ *</label>
+                <input type="text" id="vipPaymentMethods" placeholder="مثال: BaridiMob, CCP, PayPal, Stripe, Wise, فليكسي" required>
+            </div>
+            
+            <div class="form-group">
+                <label>رابط الوجهة النهائية (قناة تيليجرام المغلقة، أو بوت الدفع التلقائي) المخصص للمشتركين: *</label>
+                <input type="text" id="telegramLink" placeholder="https://t.me/your_private_channel_or_bot" required>
+            </div>
+        </div>
+
+        <!-- القسم الرابع: تفاصيل تقنية، قانونية، وأسئلة شائعة وفورية -->
+        <div class="section-card">
+            <h2>4. الإعدادات التقنية المتطورة والقانونية</h2>
+            
+            <div class="form-group">
+                <label>ما هي اللغات البرمجية الأساسية المطلوبة لواجهة المستخدم؟ *</label>
+                <select id="siteLanguages" required>
+                    <option value="اللغة العربية فقط (RTL)">اللغة العربية فقط (اتجاه من اليمين لليسار)</option>
+                    <option value="اللغة الفرنسية فقط (LTR)">اللغة الفرنسية فقط (اتجاه من اليسار لليمين)</option>
+                    <option value="دعم كامل للغتين (عربي / فرنسي)">دعم كامل ومزدوج للغتين مع زر تحويل فوري وديناميكي</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>اكتب 3 أسئلة شائعة (FAQ) مع أجوبتها تود عرضها في أسفل صفحات الهبوط لطمأنة الزوار: *</label>
+                <textarea id="siteFaq" rows="5" placeholder="س1: هل نوفر الشحن لكل الولايات؟ ج1: نعم... س2: كيف أضمن حقي في جروب الـ VIP؟ ج2: ... " required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>روابط حسابات التواصل الاجتماعي الرسمية للموقع وسياسة العمل أو الاسترجاع إن وجدت:</label>
+                <textarea id="legalAndSocial" rows="3" placeholder="روابط فيسبوك، إنستجرام، تيك توك. بالإضافة لسياسة الخصوصية أو شروط العمل المتبعة بالموقع."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>أي ملاحظات برمجية، إضافات، حركات إنيميشن، أو طلبات خاصة لم يتم ذكرها في الاستبيان؟ <span class="optional">(اختياري)</span></label>
+                <textarea id="additionalDeveloperNotes" rows="3" placeholder="اكتب هنا أي شيء يدور بذهنك ليتم برمجته بدقة ومراعاته في البنية التحتية للكود."></textarea>
+            </div>
+        </div>
+
+        <button type="submit" id="submitBtn" class="submit-btn">اعتماد وإرسال البيانات الهيكلية الشاملة إلى المطور</button>
     </form>
 
-    <div id="successMessage">🎉 تم إرسال إجاباتك بنجاح! شكراً لك، سنبدأ العمل فوراً.</div>
+    <div id="successMessage">🎉 مذهل جداً! تم حفظ وإرسال كافة التفاصيل الهيكلية والبرمجية بنجاح، وتمت جدولتها تلقائياً في ملف المطور للبدء بالتنفيذ الفوري للموقع.</div>
 </div>
 
 <script>
-    // ضع هنا رابط Google Apps Script بعد استخراجه (الخطوة الثانية)
-    const scriptURL = 'YOUR_GOOGLE_SCRIPT_URL_HERE';
-    const form = document.getElementById('mainClientForm');
+    // رابط Google Apps Script الخاص بك مدمج وجاهز تماماً للإرسال
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyiVqyBCvGJcMDlI9npQk6vcW6e4lJRm_PXvPIKgNH-4AtM9vv3vcTOfswQk-Jl4aJAxw/exec';
+    
+    const form = document.getElementById('developerConsultingForm');
     const submitBtn = document.getElementById('submitBtn');
     const successMessage = document.getElementById('successMessage');
+    const fileInput = document.getElementById('logoFile');
 
     form.addEventListener('submit', e => {
         e.preventDefault();
+        
         submitBtn.disabled = true;
-        submitBtn.innerText = 'جاري الإرسال والتحقق...';
+        submitBtn.innerText = 'جاري تشفير وضغط الشعار وإرسال البيانات التفصيلية...';
 
-        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-            .then(response => {
-                form.style.display = 'none';
-                successMessage.style.display = 'block';
-            })
-            .catch(error => {
-                console.error('Error!', error.message);
-                alert('حدث خطأ أثناء الإرسال، يرجى المحاولة مرة أخرى.');
-                submitBtn.disabled = false;
-                submitBtn.innerText = 'إرسال البيانات إلى المطور';
-            });
+        // تجميع كل الأسئلة بأسمائها العربية الواضحة لتظهر كعناوين أعمدة ممتازة وجاهزة في الـ Sheet
+        const payload = {
+            "اسم_الموقع": document.getElementById('projectName').value,
+            "ألوان_الهوية": document.getElementById('brandColors').value,
+            "نموذج_التصميم_والخط": document.getElementById('designStyle').value,
+            "المواقع_المنافسة_والملهمة": document.getElementById('competitorLinks').value,
+            "نصوص_واجهة_السورسينج": document.getElementById('sourcingText').value,
+            "حقول_السورسينج_الإضافية": document.getElementById('customSourcingFields').value,
+            "آلية_معالجة_طلبات_السورسينج": document.getElementById('sourcingProcess').value,
+            "بيانات_استقبال_الطلبات": document.getElementById('sourcingContact').value,
+            "قالب_رسالة_الواتساب": document.getElementById('whatsappTemplate').value,
+            "الوقت_المتوقع_للرد": document.getElementById('sourcingTime').value,
+            "العنوان_التسويقي_للـVIP": document.getElementById('vipMarketingTitle').value,
+            "مزايا_جروب_الـVIP": document.getElementById('vipBenefits').value,
+            "عدد_المنتجات_المعروضة": document.getElementById('vipProductsCount').value,
+            "خطط_وأسعار_الاشتراك": document.getElementById('vipPricing').value,
+            "طرق_الدفع_المدعومة": document.getElementById('vipPaymentMethods').value,
+            "رابط_الوجهة_النهائية_تيليجرام": document.getElementById('telegramLink').value,
+            "لغات_الموقع_المطلوبة": document.getElementById('siteLanguages').value,
+            "الأسئلة_الشائعة_والأجوبة": document.getElementById('siteFaq').value,
+            "السوشيال_ميديا_والسياسات": document.getElementById('legalAndSocial').value,
+            "ملاحظات_برمجية_إضافية": document.getElementById('additionalDeveloperNotes').value,
+            "logoBase64": "",
+            "logoName": ""
+        };
+
+        // التحقق من وجود ملف لوجو من المعرض لتحويله إلى كود مضغوط
+        if (fileInput.files.length > 0) {
+            const file = fileInput.files[0];
+            payload.logoName = file.name;
+            
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                payload.logoBase64 = event.target.result;
+                sendData(payload);
+            };
+            reader.readAsDataURL(file);
+        } else {
+            sendData(payload); // إرسال بدونه إن كان فارغاً
+        }
     });
+
+    function sendData(dataPayload) {
+        fetch(scriptURL, {
+            method: 'POST',
+            mode: 'no-cors', // لتفادي قيود الـ CORS ومنع المشاكل البرمجية مع جوجل
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataPayload)
+        })
+        .then(() => {
+            form.style.display = 'none';
+            successMessage.style.display = 'block';
+            window.scrollTo(0, 0);
+        })
+        .catch(error => {
+            console.error('Error!', error.message);
+            alert('حدث خطأ فني أثناء الإرسال، يرجى التحقق من الاتصال والمحاولة مرة أخرى.');
+            submitBtn.disabled = false;
+            submitBtn.innerText = 'اعتماد وإرسال البيانات الهيكلية الشاملة إلى المطور';
+        });
+    }
 </script>
 </body>
 </html>
